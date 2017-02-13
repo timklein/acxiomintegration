@@ -1,0 +1,11 @@
+{
+	"oauthHost"	:	"OAUTH_HOST",
+	"oauthURL"	:	"OAUTH_PATH_URL",
+	"apiKey"	:	"DEVELOPER_API_KEY",
+	"apiSecret"	:	"DEVELOPER_API_SECRET",
+	"apiHost"	:	"API_HOST",
+	"endpoint"	:	"API_ENDPOINT_URL",
+	"params"	:	"API_SUBMISSION_PARAMETERS",
+	"updateURL"	:	"RETURN_URL_FOR_UPDATE",
+	"accessKey"	:	"ASSIGNED_ACCESS_KEY"
+}
