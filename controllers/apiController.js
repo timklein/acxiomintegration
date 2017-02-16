@@ -14,9 +14,6 @@ let apiController = {
 		// Build oauth URL path
 		let authURL = configVars.oauthHost + configVars.oauthURL + "?client_id=" + configVars.apiKey + "&client_secret=" + configVars.apiSecret + "&grant_type=client_credentials";
 	
-		console.log(req.body);
-		console.log(req.headers);
-
 		if (req.body.accessKey == configVars.accessKey) {
 
 			request.post(authURL, function (err, resp, data) {
@@ -32,6 +29,10 @@ let apiController = {
 			});
 		}
 		else {
+
+			console.log('REQUEST DECLINED ');
+			console.log(req.body);
+			console.log(req.headers);
 			res.sendStatus(401);
 		}
 	},
@@ -62,8 +63,6 @@ let apiController = {
 		// If name is missing search by email address only
 		else lookupValue = encodeURIComponent(req.body.email);
 
-		console.log(lookupValue);
-
 		// Submit token to retrieve marketing data
 		request({
 			url: configVars.apiHost + configVars.endpoint + lookupValue + configVars.params,
@@ -88,6 +87,8 @@ let apiController = {
 				// Else add Lifestage data to request body
 				req.body.lifestageCluster = cluster;
 				req.body.lifestageGroup = group;
+
+				req.body.lookupValue = lookupValue;
 				
 				next();
 			}
@@ -95,8 +96,6 @@ let apiController = {
 	},
 	update : function (req, res) {
 
-		console.log(req.body);
-		
 		// Return retrieved data for matching and updating
 		request({
 			url: configVars.updateURL,
