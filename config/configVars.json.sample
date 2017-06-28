@@ -7,5 +7,6 @@
 	"endpoint"	:	"API_ENDPOINT_URL",
 	"params"	:	"API_SUBMISSION_PARAMETERS",
 	"updateURL"	:	"RETURN_URL_FOR_UPDATE",
-	"accessKey"	:	"ASSIGNED_ACCESS_KEY"
+	"accessKey"	:	"ASSIGNED_ACCESS_KEY",
+	"appKey"	:	"INFUSIONSOFT_APPLICATION_KEY"
 }

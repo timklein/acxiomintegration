@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const apiController = require('./controllers/apiController.js')
+const apiController = require('./controllers/apiController.js');
 
 const app = express();
 

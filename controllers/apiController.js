@@ -1,7 +1,7 @@
 'use strict';
 
 const request = require('request');
-const fs = require('fs')
+const fs = require('fs');
 
 // Load Configuration Variables
 let configVars = require('../config/configVars.json');
@@ -19,6 +19,8 @@ let apiController = {
 			request.post(authURL, function (err, resp, data) {
 
 				let token = JSON.parse(data).access_token;
+
+				console.log(JSON.parse(data));
 
 				if (err) throw err;
 				
@@ -96,18 +98,21 @@ let apiController = {
 	},
 	update : function (req, res) {
 
+		// Populate the variables into the API submission string
+		let submissionBody = '<?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>ContactService.update</methodName><params><param><value><string>' + configVars.appKey + '</string></value></param><param><value><int>' + req.body.contactId + '</int></value></param><param><value><struct><member><name>_LifeStageCluster</name><value><string>' + req.body.lifestageCluster + '</string></value></member><member><name>_LifeStageGroup</name><value><string>' + req.body.lifestageGroup + '</string></value></member></struct></value></param></params></methodCall>';
+
 		// Return retrieved data for matching and updating
 		request({
 			url: configVars.updateURL,
-			headers: {'Content-type':'application/json'},
+			headers: {'Content-type':'application/xml'},
 			method: 'POST',
-			body: JSON.stringify(req.body)
+			body: submissionBody
 		}, function (err, resp, body) {
 
 			let fileName = './data/' + req.body.contactId + '.json';
 			
 			// Write submitted data to file 
-			fs.writeFile(fileName, JSON.stringify(req.body), (err) => {
+			fs.writeFile(fileName, body, (err) => {
 				if (err) throw err;
 			});
 
@@ -129,7 +134,7 @@ let apiController = {
 			else {
 				
 				// Else, update status.log with failure information
-				fs.appendFile('.data/status.log', 'Error updating file ' + filename + ' ' + err + '\n' );
+				fs.appendFile('./data/status.log', 'Error updating file ' + fileName + ' ' + err + '\n' );
 			
 			}
 
@@ -137,6 +142,6 @@ let apiController = {
 
 		});
 	}
-}
+};
 
 module.exports = apiController;
